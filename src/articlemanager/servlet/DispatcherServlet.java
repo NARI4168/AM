@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import articlemanager.Config;
 import articlemanager.controller.ArticleController;
+import articlemanager.controller.MemberController;
 import articlemanager.exception.SQLErrorException;
 import articlemanager.util.DBUtil;
 import articlemanager.util.SecSql;
@@ -75,21 +76,41 @@ public class DispatcherServlet extends HttpServlet {
 
 			String controllerName = requestUriBits[3];
 			String actionMethodName = requestUriBits[4];
-		
+
 			if (controllerName.equals("article")) {
 				ArticleController controller = new ArticleController(request, response, con);
 
 				if (actionMethodName.equals("list")) {
-					controller.actionList();
+					controller.actionlist();
 				} else if (actionMethodName.equals("home")) {
 					controller.actionHome();
 				} else if (actionMethodName.equals("detail")) {
 					controller.actionDetail();
-				} else if (actionMethodName.equals("delete")) {
-					controller.actionDelete();
+				} else if (actionMethodName.equals("doDelete")) {
+					controller.actionDoDelete();
 				} else if (actionMethodName.equals("modify")) {
+					controller.actionModify();
+				} else if (actionMethodName.equals("doModify")) {
 					controller.actionDoModify();
+				} else if (actionMethodName.equals("write")) {
+					controller.actionWrite();
+				} else if (actionMethodName.equals("doWrite")) {
+					controller.actionDoWrite();
 				}
+			}
+			if (controllerName.equals("member")) {
+				MemberController controller = new MemberController(request, response, con);
+
+				if (actionMethodName.equals("join")) {
+					controller.actionJoin();
+				} else if (actionMethodName.equals("doJoin")) {
+					controller.actionDoJoin();
+				} else if (actionMethodName.equals("doLogin")) {
+					controller.actionDoLogin();
+				}else if (actionMethodName.equals("doLogout")) {
+					controller.actionDoLogout();
+				}
+
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

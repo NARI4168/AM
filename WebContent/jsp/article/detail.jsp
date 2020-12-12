@@ -31,7 +31,7 @@ Map<String, Object> loginedMemberRow = (Map<String, Object>) request.getAttribut
 
 	<div>
 		<font size="3" color="Gray"> <a
-			href="delete?id=<%=article.id%>"
+			href="doDelete?id=<%=article.id%>"
 			style="text-decoration: none; color: Gray">삭제</a> | <a
 			href="modify?id=<%=article.id%>"
 			style="text-decoration: none; color: Gray">수정</a></font>

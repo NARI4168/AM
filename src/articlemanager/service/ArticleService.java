@@ -46,7 +46,11 @@ public class ArticleService {
 	}
 
 	public void update(int id, String title, String body) {
-		 articleDao.update(id, title, body);		
+		articleDao.update(id, title, body);
+	}
+
+	public void insert(String title, String body) {
+		articleDao.insert(title, body);
 	}
 
 }

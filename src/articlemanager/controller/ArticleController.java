@@ -25,10 +25,9 @@ public class ArticleController {
 		this.con = con;
 
 		articleService = new ArticleService(con);
-
 	}
 
-	public void actionList() throws ServletException, IOException {
+	public void actionlist() throws ServletException, IOException {
 		int page = 1;
 
 		if (request.getParameter("page") != null && request.getParameter("page").length() != 0) {
@@ -60,7 +59,7 @@ public class ArticleController {
 		request.getRequestDispatcher("/jsp/article/detail.jsp").forward(request, response);
 	}
 
-	public void actionDelete() throws ServletException, IOException {
+	public void actionDoDelete() throws ServletException, IOException {
 		int id = Integer.parseInt(request.getParameter("id"));
 
 		Article article = articleService.getArticleById(id);
@@ -73,27 +72,38 @@ public class ArticleController {
 
 	public void actionModify() throws ServletException, IOException {
 		int id = Integer.parseInt(request.getParameter("id"));
-		
+
 		Article article = articleService.getArticleById(id);
 
 		request.setAttribute("article", article);
-		
-		request.getRequestDispatcher("/jsp/article/modify.jsp").forward(request, response);
 
+		request.getRequestDispatcher("/jsp/article/modify.jsp").forward(request, response);
 	}
 
 	public void actionDoModify() throws ServletException, IOException {
-		actionModify();
-		
-	
 		int id = Integer.parseInt(request.getParameter("id"));
 		String title = request.getParameter("title");
 		String body = request.getParameter("body");
-		
+
 		articleService.update(id, title, body);
-		
+
 		response.getWriter().append(String
 				.format("<script> alert('%d번 글이 수정되었습니다.'); location.replace('detail?id=%d'); </script>", id, id));
+	}
+
+	public void actionWrite() throws ServletException, IOException {
+		request.getRequestDispatcher("/jsp/article/write.jsp").forward(request, response);
+	}
+
+	public void actionDoWrite() throws ServletException, IOException {
+		String title = request.getParameter("title");
+		String body = request.getParameter("body");
+
+		// int loginedMemberId = (int)session.getAttribute("loginedMemberId");
+
+		articleService.insert(title, body);
+
+		response.getWriter().append(String.format("<script> alert('글이 등록되었습니다.');location.replace('list'); </script>"));
 	}
 
 }

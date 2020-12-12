@@ -68,15 +68,26 @@ public class ArticleDao {
 	}
 
 	public void update(int id, String title, String body) {
-		System.out.println("11");
+	
 		SecSql sql = SecSql.from("UPDATE article");
 		sql.append("SET title = ?", title);
 		sql.append(", body = ?", body);
 		sql.append(", regDate = NOW()");
 		sql.append("WHERE id = ?", id);
-		System.out.println("22");
+
 		DBUtil.update(con, sql);
-		System.out.println("33");
+		;
+	}
+
+	public void insert(String title, String body) {
+		
+		SecSql sql = SecSql.from("INSERT INTO article");
+		sql.append("SET title = ?", title);
+		sql.append(", body = ?", body);
+		sql.append(", regDate = NOW()");
+		sql.append(", memberId =?", 123);
+
+		DBUtil.insert(con, sql);		
 	}
 
 }

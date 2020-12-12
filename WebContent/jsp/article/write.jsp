@@ -35,7 +35,7 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 				style="text-decoration: none">돌아가기</button>
 		</div>
 	</form>
-
+<!--  
 	<%
 		if (!isLogined) {
 	%>
@@ -46,6 +46,6 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 	<%
 		}
 	%>
-
+-->
 </body>
 </html>
