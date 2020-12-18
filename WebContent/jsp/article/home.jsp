@@ -1,6 +1,3 @@
-<%@ page import="java.util.List"%>
-<%@ page import="java.util.Map"%>
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -25,37 +22,7 @@ P {
 
 	<p>UNKWN.NOV</p>
 
-	<script>
-		var LoginForm__submitDone = false;
-
-		function LoginForm__submit(form) {
-			if (LoginForm__submitDone) {
-				alert('처리중 입니다.');
-				return;
-			}
-
-			form.loginId.value = form.loginId.value.trim();
-
-			if (form.loginId.value.length == 0) {
-				alert('아이디를 입력해주세요.');
-				form.loginId.focus();
-				return;
-			}
-			form.loginPw.value = form.loginPw.value.trim();
-
-			if (form.loginPw.value.length == 0) {
-				alert('비밀번호을 입력해주세요.');
-				form.loginPw.focus();
-				return;
-			}
-
-			form.submit();
-			LoginForm__submitDone = true;
-		}
-	</script>
-
-	<form action="../member/doLogin" method="POST"
-		onsubmit="LoginForm__submit(this); return false;">
+	<form action="../member/doLogin" method="POST">
 
 		<div>
 			<font size="6" color="Gray"><b>Login</b></font><br> <font

@@ -1,12 +1,11 @@
 package articlemanager.service;
 
 import java.sql.Connection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import articlemanager.dao.ArticleDao;
 import articlemanager.dto.Article;
+import articlemanager.dto.Reply;
 
 public class ArticleService {
 	private ArticleDao articleDao;
@@ -25,7 +24,6 @@ public class ArticleService {
 		int totalCount = articleDao.getTotalCount();
 		int totalPage = (int) Math.ceil((double) totalCount / itemsInAPage);
 		return totalPage;
-
 	}
 
 	public List<Article> getForPrintArticles(int page) {
@@ -41,6 +39,10 @@ public class ArticleService {
 		return articleDao.getArticleById(id);
 	}
 
+	public List<Article> getArticles() {
+		return articleDao.getArticles();
+	}
+
 	public void delete(int id) {
 		articleDao.delete(id);
 	}
@@ -49,8 +51,24 @@ public class ArticleService {
 		articleDao.update(id, title, body);
 	}
 
-	public void insert(String title, String body) {
-		articleDao.insert(title, body);
+	public void insert(String title, String body, int memberId, String writer) {
+		articleDao.insert(title, body, memberId, writer);
+	}
+
+	public Article prev_article(int id) {
+		return articleDao.prev_article(id);
+	}
+
+	public Article next_article(int id) {
+		return articleDao.next_article(id);
+	}
+
+	public int writeReply(String body, int memberId, int articleId, String writer) {
+		return articleDao.writeReply(body, memberId, articleId, writer);
+	}
+
+	public List<Reply> getReplies(int id) {
+		return articleDao.getReplies(id);
 	}
 
 }

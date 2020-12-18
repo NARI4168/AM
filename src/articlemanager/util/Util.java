@@ -1,6 +1,7 @@
 package articlemanager.util;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -71,4 +72,33 @@ public class Util {
 	public static String getString(HttpServletRequest req, String paramName) {
 		return req.getParameter(paramName);
 	}
-} 
+
+	// alert Util
+	public static void init(HttpServletResponse response) {
+		response.setContentType("text/html; charset=euc-kr");
+		response.setCharacterEncoding("euc-kr");
+	}
+
+	public static void alert(HttpServletResponse response, String alertText) throws IOException {
+		init(response);
+		PrintWriter out = response.getWriter();
+		out.println("<script>alert('" + alertText + "'); </script>  ");
+		out.flush();
+	}
+
+	public static void alertAndBack(HttpServletResponse response, String alertText) throws IOException {
+		init(response);
+		PrintWriter out = response.getWriter();
+		out.println("<script>alert('" + alertText + "'); history.back(); </script>  ");
+		out.flush();
+	}
+
+	public static void alertAndMove(HttpServletResponse response, String alertText, String nextPage)
+            throws IOException {
+        init(response);
+        PrintWriter out = response.getWriter();
+        out.println("<script>alert('" + alertText + "'); location.href='" + nextPage + "';</script> ");
+        out.flush();
+	}
+
+}

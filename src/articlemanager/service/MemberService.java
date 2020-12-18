@@ -1,9 +1,6 @@
 package articlemanager.service;
 
 import java.sql.Connection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import articlemanager.dao.MemberDao;
 import articlemanager.dto.Member;
@@ -23,5 +20,8 @@ public class MemberService {
 		memberDao.join(loginId, loginPw, name);
 	}
 
+	public Member getMemberById(int id) {
+		return memberDao.getMemberById(id);
+	}
 
 }

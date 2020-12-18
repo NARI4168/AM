@@ -74,7 +74,6 @@
 			이름 : <input autocomplete="off" placeholder="이름을 입력해주세요." name="name"
 				type="text" />
 		</div><p>
-
 		<div>
 			<button type="submit">가입하기</button>
 			<button type="button">

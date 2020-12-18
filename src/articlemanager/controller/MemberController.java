@@ -6,9 +6,11 @@ import java.sql.Connection;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import articlemanager.dto.Member;
 import articlemanager.service.MemberService;
+import articlemanager.util.Util;
 
 public class MemberController {
 
@@ -38,44 +40,47 @@ public class MemberController {
 		Member member = memberService.getMemberByLoginId(loginId);
 
 		if (member != null) {
-			response.getWriter().append(
-					String.format("<script> alert('%s(은)는 이미 사용중인 아이디 입니다.'); history.back(); </script>", loginId));
+			Util.alertAndBack(response, (loginId + "(은)는 이미 사용중인 아이디 입니다."));
 		} else if (member == null) {
 			memberService.join(loginId, loginPw, name);
-			response.getWriter().append(
-					String.format("<script> alert('회원이 생성되었습니다.');location.replace('../article/home'); </script>"));
+			Util.alertAndMove(response, "가입이 완료되었습니다.", "../article/home");
 		}
 	}
 
 	public void actionDoLogin() throws ServletException, IOException {
 		String loginId = request.getParameter("loginId");
-		String loginPw = request.getParameter("loginPw");
-
-		Member member = memberService.getMemberByLoginId(loginId);
-		
-		
-		if (member == null) {
-			response.getWriter().append(
-					String.format("<script> alert('%s은(는) 존재하지 않는 로그인 아이디 입니다.'); history.back(); </script>", loginId));
-		}
-		
-		
-		if (((String) member.loginPw).equals(loginPw) == false) {
-			response.getWriter()
-					.append(String.format("<script> alert('비밀번호가 일치하지 않습니다.'); history.back(); </script>"));
+		if (loginId.length() == 0) {
+			Util.alertAndBack(response, "아이디를 입력해주세요.");
 			return;
 		}
-	
-		request.setAttribute("loginedMemberId",member.loginId);
-	
-		response.getWriter()
-				.append(String.format("<script> alert('로그인 성공!'); location.replace('../article/list');</script>"));
+
+		String loginPw = request.getParameter("loginPw");
+		if (loginPw.length() == 0) {
+			Util.alertAndBack(response, "비밀번호를 입력해주세요.");
+			return;
+		}
+
+		Member member = memberService.getMemberByLoginId(loginId);
+
+		if (member == null) {
+			Util.alertAndBack(response, (loginId + "은(는) 존재하지 않는 아이디 입니다."));
+			return;
+		}
+
+		if (((String) member.loginPw).equals(loginPw) == false) {
+			Util.alertAndBack(response, "비밀번호가 일치하지 않습니다.");
+			return;
+		}
+
+		HttpSession session = request.getSession();
+		session.setAttribute("loginedMemberId", member.id);
+		Util.alertAndMove(response, "로그인 성공!", "../article/list");
 	}
 
 	public void actionDoLogout() throws ServletException, IOException {
-		
-		request.removeAttribute("loginedMemberId");
-		String.format("<script> alert('로그아웃 되었습니다.'); location.replace('../article/home'); </script>");
+		HttpSession session = request.getSession();
+		session.removeAttribute("loginedMemberId");
+		Util.alertAndMove(response, "로그아웃 되었습니다.", "../article/home");
 	}
 
 }

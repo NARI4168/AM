@@ -1,11 +1,9 @@
 package articlemanager.dao;
 
 import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.Map;
 
-import articlemanager.dto.Article;
 import articlemanager.dto.Member;
 import articlemanager.util.DBUtil;
 import articlemanager.util.SecSql;
@@ -37,8 +35,23 @@ public class MemberDao {
 		sql.append("SET loginId = ?", loginId);
 		sql.append(", loginPw = ?", loginPw);
 		sql.append(", name = ?", name);
+		sql.append(", regDate = NOW()");
 
 		DBUtil.insert(con, sql);
 	}
 
+	public Member getMemberById(int id) {
+				
+		SecSql sql = SecSql.from("SELECT *");
+		sql.append("FROM member");
+		sql.append("WHERE id = ?", id);
+		
+		Map<String, Object> memberMap = DBUtil.selectRow(con, sql);
+	
+		if (memberMap.isEmpty()) {
+			return null;
+		}
+		return new Member(memberMap);
+	}
+		
 }

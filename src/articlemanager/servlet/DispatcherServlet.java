@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,9 +15,9 @@ import javax.servlet.http.HttpSession;
 import articlemanager.Config;
 import articlemanager.controller.ArticleController;
 import articlemanager.controller.MemberController;
+import articlemanager.dto.Member;
 import articlemanager.exception.SQLErrorException;
-import articlemanager.util.DBUtil;
-import articlemanager.util.SecSql;
+import articlemanager.service.MemberService;
 
 @WebServlet("/s/*")
 public class DispatcherServlet extends HttpServlet {
@@ -58,20 +57,19 @@ public class DispatcherServlet extends HttpServlet {
 
 			boolean isLogined = false;
 			int loginedMemberId = -1;
-			Map<String, Object> loginedMemberRow = null;
+			Member loginedMember = null;
+
+			MemberService memberService = new MemberService(con);
 
 			if (session.getAttribute("loginedMemberId") != null) {
 				loginedMemberId = (int) session.getAttribute("loginedMemberId");
 				isLogined = true;
-
-				SecSql sql = SecSql.from("SELECT * FROM member");
-				sql.append("WHERE id = ?", loginedMemberId);
-				loginedMemberRow = DBUtil.selectRow(con, sql);
+				loginedMember = memberService.getMemberById(loginedMemberId);
 			}
 
 			request.setAttribute("isLogined", isLogined);
 			request.setAttribute("loginedMemberId", loginedMemberId);
-			request.setAttribute("loginedMemberRow", loginedMemberRow);
+			request.setAttribute("loginedMember", loginedMember);
 			// 끝
 
 			String controllerName = requestUriBits[3];
@@ -96,6 +94,8 @@ public class DispatcherServlet extends HttpServlet {
 					controller.actionWrite();
 				} else if (actionMethodName.equals("doWrite")) {
 					controller.actionDoWrite();
+				}else if (actionMethodName.equals("doWriteReply")) {
+					controller.actionDoWriteReply();
 				}
 			}
 			if (controllerName.equals("member")) {
@@ -107,7 +107,7 @@ public class DispatcherServlet extends HttpServlet {
 					controller.actionDoJoin();
 				} else if (actionMethodName.equals("doLogin")) {
 					controller.actionDoLogin();
-				}else if (actionMethodName.equals("doLogout")) {
+				} else if (actionMethodName.equals("doLogout")) {
 					controller.actionDoLogout();
 				}
 

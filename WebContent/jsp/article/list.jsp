@@ -1,18 +1,7 @@
-<%@ page import="java.util.List"%>
-<%@ page import="java.util.Map"%>
-<%@ page import="articlemanager.dto.Article"%>
-<%@ page import="articlemanager.dto.Member"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-
-<%	List<Article> articles = (List<Article>) request.getAttribute("articles");
-int cPage = (int) request.getAttribute("page");
-int totalPage = (int) request.getAttribute("totalPage");
-boolean isLogined = (boolean) request.getAttribute("isLogined");
-int loginedMemberId = (int) request.getAttribute("loginedMemberId");
-Map<String, Object> loginedMemberRow = (Map<String, Object>) request.getAttribute("loginedMemberRow");
-%>
+	pageEncoding="UTF-8" isELIgnored="false"%>
 
 <!DOCTYPE html>
 <html>
@@ -36,27 +25,21 @@ p {
 		<font size="8" color="LightCoral"> <b>Article List</b></font>
 	</div>
 	<br>
-	<%
-		if (isLogined) {
-	%>
-	<div>
-		<font size="5" color="DimGray"><b><%=loginedMemberRow.get("loginId")%>님
-				환영합니다! </b></font> <a href="../member/doLogout"
-			style="color: Black; font-size: 4;"><b>logout</b></a>
-	</div>
-	<%
-		}
-	%>
-	<%
-		if (!isLogined) {
-	%>
-	<div>
-		<font size="5" color="Red"><b>로그인 후 이용하실 수 있습니다.</b> <a
-			href="../article/home" style="color: Black;"><b> login</b></a></font>
-	</div>
-	<%
-		}
-	%>
+
+	<c:if test="${isLogined}">
+		<div>
+			<font size="5" color="DimGray"><b>${member.loginId}님
+					환영합니다!</b></font> <a href="../member/doLogout"
+				style="color: Black; font-size: 4;"><b>logout</b></a>
+		</div>
+	</c:if>
+
+	<c:if test="${!isLogined}">
+		<div>
+			<font size="5" color="Red"><b>로그인 후 이용하실 수 있습니다.</b> <a
+				href="../article/home" style="color: Black;"><b> login</b></a></font>
+		</div>
+	</c:if>
 	<br>
 	<div>
 		<font size="3"> <a href="write"
@@ -64,15 +47,12 @@ p {
 	</div>
 
 	<ul>
-		<%
-			for (Article article : articles) {
-		%>
-		<li><a href="detail?id=<%=article.id%>"><b><%=article.id%>.
-					제목 : <%=article.title%></b></a><br><!--작성자 : %=article.loginId%><br>-->
-			작성일 : <%=article.regDate%><p></li>
-		<%
-			}
-		%>
+		<c:forEach items="${articles}" var="article">
+			<li><a href="detail?id=${article.id}"><b>${article.id}.
+						제목 : ${article.title}</b></a><br>작성자 : ${article.writer}<br> 작성일
+				: ${article.regDate}
+				<p></li>
+		</c:forEach>
 	</ul>
 
 	<style type="text/css">
@@ -81,39 +61,25 @@ p {
 }
 </style>
 	<div class="page">
-		<%
-			if (cPage > 1) {
-		%>
-		<a href="list?page=1" style="text-decoration: none">≪처음 </a>
-		<%
-			}
-		%>
-		<%
-			int pageSize = 5;
-		int from = cPage - pageSize;
-		if (from < 1) {
-			from = 1;
-		}
-
-		int end = cPage + pageSize;
-		if (end > totalPage) {
-			end = totalPage;
-		}
-
-		for (int i = from; i <= end; i++) {
-		%>
-		<a class="<%=cPage == i ? "red" : ""%>" href="list?page=<%=i%>"><%=i%></a>
-		<%
-			}
-		%>
-		<%
-			if (cPage < totalPage) {
-		%>
-		<a href="list?page=<%=totalPage%>" style="text-decoration: none">
-			끝≫</a>
-		<%
-			}
-		%>
+		<c:if test="${cPage>1}">
+			<a href="list?page=1" style="text-decoration: none">≪처음 </a>
+		</c:if>
+		<c:set var="pageSize" value="3"/>
+		<c:set var="from" value="${cPage-pageSize}"/>
+		<c:if test="${from<1}">
+			<c:set var="from" value="1" />
+		</c:if>
+		<c:set var="end" value="${cPage+pageSize}" />
+		<c:if test="${end>totalPage}">
+			<c:set var="end" value="${totalPage}" />
+		</c:if>		
+		<c:forEach var="i" begin="${from}" end="${end}" step="1">
+			<a class="${cPage == i ? 'red' : ' '}" href="list?page=${i}">${i}</a>
+		</c:forEach>
+		<c:if test="${cPage<totalPage}">
+			<a href="list?page=${totalPage}" style="text-decoration: none">
+				끝≫</a>
+		</c:if>
 	</div>
 </body>
 </html>
