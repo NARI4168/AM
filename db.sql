@@ -1,7 +1,7 @@
 # DB 생성
-DROP DATABASE IF EXISTS am;
-CREATE DATABASE am;
-USE am;
+DROP DATABASE IF EXISTS articlemanager;
+CREATE DATABASE articlemanager;
+USE articlemanager;
 
 # 게시물 테이블 생성
 CREATE TABLE article (
