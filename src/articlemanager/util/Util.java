@@ -94,11 +94,36 @@ public class Util {
 	}
 
 	public static void alertAndMove(HttpServletResponse response, String alertText, String nextPage)
-            throws IOException {
-        init(response);
-        PrintWriter out = response.getWriter();
-        out.println("<script>alert('" + alertText + "'); location.href='" + nextPage + "';</script> ");
-        out.flush();
+			throws IOException {
+		init(response);
+		PrintWriter out = response.getWriter();
+		out.println("<script>alert('" + alertText + "'); location.href='" + nextPage + "';</script> ");
+		out.flush();
 	}
 
+	public static void reload(HttpServletResponse response, String nextPage) throws IOException {
+		init(response);
+		PrintWriter out = response.getWriter();
+		out.println("<script>location.href='" + nextPage + "';</script>");
+		out.flush();
+	}
+
+	/*
+	 * //파일카피 public static void copyFileUsingChannel(File source, File dest) throws
+	 * IOException { FileChannel sourceChannel = null; FileChannel destChannel =
+	 * null; FileInputStream fs = null; FileOutputStream fo = null; try { fs = new
+	 * FileInputStream(source); fo = new FileOutputStream(dest); sourceChannel =
+	 * fs.getChannel(); destChannel = fo.getChannel();
+	 * destChannel.transferFrom(sourceChannel, 0, sourceChannel.size()); }catch
+	 * (Exception e) { e.printStackTrace(); }finally{ if(fs != null){fs.close();}
+	 * if(fo != null){fo.close();} if(fo != null){sourceChannel.close();}
+	 * if(destChannel != null){destChannel.close();} } }
+	 * 
+	 * 
+	 * public static boolean blobToFile(Object item,String file_path) throws
+	 * Exception{ try { BLOB blob = (oracle.sql.BLOB)item; //item은 데이터베이스 조회 결과이다.
+	 * 여기서는 Object로 표시하였다. byte [] content = blob.getBytes( 1, ( int ) blob.length()
+	 * ); FileUtils.writeByteArrayToFile(new File(file_path), content); } catch
+	 * (Exception e) { e.printStackTrace(); return false; } return true; }
+	 */
 }

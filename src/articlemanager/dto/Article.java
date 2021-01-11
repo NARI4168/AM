@@ -9,6 +9,7 @@ public class Article {
 	public String regDate;
 	public int memberId;
 	public String writer;
+	public int hit;
 
 	public int getId() {
 		return id;
@@ -62,6 +63,14 @@ public class Article {
 
 	}
 
+	public int getHit() {
+		return hit;
+	}
+
+	public void setHit(int hit) {
+		this.hit = hit;
+	}
+
 	public Article(Map<String, Object> row) {
 		this.id = (int) row.get("id");
 		this.title = (String) row.get("title");
@@ -69,6 +78,15 @@ public class Article {
 		this.regDate = (String) row.get("regDate");
 		this.memberId = (int) row.get("memberId");
 		this.writer = (String) row.get("writer");
+		this.hit = (int) row.get("hit");
 	}
+
+	
+	@Override
+	public String toString() {
+		return "Article [id=" + id + ", title=" + title + ", body=" + body + ", regDate=" + regDate + ", memberId="
+				+ memberId + ", writer=" + writer + ", hit=" + hit + "]";
+	}
+
 
 }

@@ -1,10 +1,12 @@
 package articlemanager.service;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 import articlemanager.dao.ArticleDao;
 import articlemanager.dto.Article;
+import articlemanager.dto.Like;
 import articlemanager.dto.Reply;
 
 public class ArticleService {
@@ -29,7 +31,7 @@ public class ArticleService {
 	public List<Article> getForPrintArticles(int page) {
 		int itemsInAPage = getItemsInAPage();
 		int limitFrom = (page - 1) * itemsInAPage;
-
+      //  String keyword;
 		List<Article> articles = articleDao.getArticles(limitFrom, itemsInAPage);
 
 		return articles;
@@ -69,6 +71,48 @@ public class ArticleService {
 
 	public List<Reply> getReplies(int id) {
 		return articleDao.getReplies(id);
+	}
+
+	public Reply getReplyById(int id) {
+		return articleDao.getReplyById(id);
+	}
+
+	public void deleteReply(int id) {
+		articleDao.deleteReply(id);
+	}
+
+	public void updateReply(int id, String body) {
+		articleDao.updateReply(id, body);
+	}
+
+	public int countOfReplyInArticle(int id) {
+		int countOfReplyInArticle = articleDao.countReply(id);
+		return countOfReplyInArticle;
+	}
+
+	public Like likecheck(int memberId, int articleId) {
+		return articleDao.likecheck(memberId, articleId);
+	}
+
+	public void insertLike(int loginedMemberId, int articleId) {
+		articleDao.insertLike(loginedMemberId, articleId);
+	}
+
+	public void updateLike(int loginedMemberId, int articleId, int likecheck) {
+		articleDao.updateLike(loginedMemberId, articleId, likecheck);
+	}
+
+	public int countOfLike(int id) {
+		int countOfLike = articleDao.countLike(id);
+		return countOfLike;
+	}
+
+	public void increaseHit(int id) {
+		articleDao.increaseHit(id);
+	}
+
+	public List<Article> findKeyword(String keyword) {
+		return articleDao.findKeyword(keyword);
 	}
 
 }

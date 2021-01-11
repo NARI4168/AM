@@ -7,7 +7,28 @@ public class Member {
 	public String loginId;
 	public String loginPw;
 	public String name;
+	public String regDate;
+	public String imagePath;
+	public String image;
 	
+	
+	
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -48,7 +69,6 @@ public class Member {
 		this.regDate = regDate;
 	}
 
-	public String regDate;
 	
 	public Member() {
 
@@ -60,6 +80,8 @@ public class Member {
 		this.loginPw = (String) row.get("loginPw");
 		this.name = (String) row.get("name");	
 		this.regDate = (String) row.get("regDate");	
+		this.image = (String) row.get("image");
+		this.imagePath = (String) row.get("imagePath");
 	}
 
 	public boolean isAdmin() {

@@ -24,4 +24,8 @@ public class MemberService {
 		return memberDao.getMemberById(id);
 	}
 
+	public void profileUpdate(int memberId, String name, String fullPath, String newFileName) {		
+		memberDao.profileUpdate(memberId, name, fullPath, newFileName);	
+	}
+
 }

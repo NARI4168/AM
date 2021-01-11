@@ -53,5 +53,19 @@ public class MemberDao {
 		}
 		return new Member(memberMap);
 	}
+
+	public void profileUpdate(int memberId, String name, String fullPath, String newFileName) {
+		SecSql sql = SecSql.from("UPDATE member");
+		sql.append("SET name = ?", name);
+		if(newFileName != null) {
+		sql.append(", imagePath =?", fullPath);
+		sql.append(", image =?", newFileName);
+		}
+		sql.append("WHERE id = ?", memberId);
+
 		
+		DBUtil.update(con, sql);		
+	}
+		
+	
 }

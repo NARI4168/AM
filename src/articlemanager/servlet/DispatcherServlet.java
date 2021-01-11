@@ -70,7 +70,6 @@ public class DispatcherServlet extends HttpServlet {
 			request.setAttribute("isLogined", isLogined);
 			request.setAttribute("loginedMemberId", loginedMemberId);
 			request.setAttribute("loginedMember", loginedMember);
-			// 끝
 
 			String controllerName = requestUriBits[3];
 			String actionMethodName = requestUriBits[4];
@@ -94,9 +93,20 @@ public class DispatcherServlet extends HttpServlet {
 					controller.actionWrite();
 				} else if (actionMethodName.equals("doWrite")) {
 					controller.actionDoWrite();
-				}else if (actionMethodName.equals("doWriteReply")) {
+				} else if (actionMethodName.equals("doWriteReply")) {
 					controller.actionDoWriteReply();
+				} else if (actionMethodName.equals("doDeleteReply")) {
+					controller.actionDoDeleteReply();
+				} else if (actionMethodName.equals("modifyAndDeleteOfReply")) {
+					controller.actionModifyAndDeleteOfReply();
+				} else if (actionMethodName.equals("doModifyReply")) {
+					controller.actionDoModifyReply();
+				} else if (actionMethodName.equals("doLike")) {
+					controller.actionDoLike();
+				} else if (actionMethodName.equals("doSearch")) {
+					controller.actionDoSearch();
 				}
+
 			}
 			if (controllerName.equals("member")) {
 				MemberController controller = new MemberController(request, response, con);
@@ -109,6 +119,12 @@ public class DispatcherServlet extends HttpServlet {
 					controller.actionDoLogin();
 				} else if (actionMethodName.equals("doLogout")) {
 					controller.actionDoLogout();
+				} else if (actionMethodName.equals("modify_profile")) {
+					controller.actionModify_profile();
+				} else if (actionMethodName.equals("doModify_profile")) {
+					controller.actionDoModify_profile();
+				}else if (actionMethodName.equals("doImageLoad")) {
+					controller.actionDoImageLoad();
 				}
 
 			}

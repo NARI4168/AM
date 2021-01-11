@@ -1,5 +1,5 @@
+.project
 .classpath
 .settings
-.project
-build/
 bin/
+build/

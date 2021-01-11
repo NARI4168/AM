@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Article List</title>
+<title>Article Search</title>
 
 <style>
 p {
@@ -25,33 +25,15 @@ p {
 	<div>
 		<a href="list"
 			style="text-decoration: none; color: LightCoral; font-size: 50px;"><b>Article
-				List</b></a>
+				Search</b></a>
 	</div>
 	<br>
 
 	<c:if test="${isLogined}">
 		<div>
-		
-		<c:choose>
-			
-	<c:when test="${member.imagePath == null}">
-				<img
-					src="https://mblogthumb-phinf.pstatic.net/20150427_73/ninevincent_1430122793329pvryW_JPEG/kakao_7.jpg?type=w2"
-					width="50" height="50">
-			</c:when>
-			<c:otherwise>
-					<img
-						src="../member/doImageLoad"
-						width="50" height="50" />
-				</c:otherwise>
-			</c:choose>
-		
-
-			
-			<font size="5" color="DimGray"><b>${member.name}님 환영합니다!</b></font> <a
-				href="../member/modify_profile"
-				style="text-decoration: none; color: LightCoral; font-size: 4;"><b>프로필
-					수정</b></a> <a href="../member/doLogout" style="color: Black; font-size: 4;"><b>logout</b></a>
+			<font size="5" color="DimGray"><b>${member.loginId}님
+					환영합니다!</b></font> <a href="../member/doLogout"
+				style="color: Black; font-size: 4;"><b>logout</b></a>
 		</div>
 	</c:if>
 
@@ -74,7 +56,8 @@ p {
 			style="margin-left: 10px; width: 150px; height: 28px; border: 1px solid Gray;">
 
 
-			<button type="submit" onclick="location.href='list'"
+			<button type="submit"
+				onclick="location.href='../article/doSearch?list"
 				style="margin-top: 5px; width: 50px; height: 31px; background-color: #ffb6c1; color: #252525;">
 				<b>검색</b>
 			</button>
@@ -94,7 +77,7 @@ p {
 		</c:forEach>
 	</ul>
 
-	<style type="text/css">
+<!--  	<style type="text/css">
 .page>a.red {
 	color: red;
 }
@@ -119,6 +102,6 @@ p {
 			<a href="list?page=${totalPage}" style="text-decoration: none">
 				끝≫</a>
 		</c:if>
-	</div>
+	</div> -->
 </body>
 </html>
